@@ -1,37 +1,32 @@
-import React, { createContext, useState } from 'react';
+import React, { createContext } from 'react';
 import './App.css';
-import styled from 'styled-components';
-import TodoTop from './components/TodoTop';
+import { createGlobalStyle } from 'styled-components';
 import TodoList from './components/TodoList';
-import TodoBottom from './components/TodoBottom';
-import data from './data';
+import TodoTemplate from './components/TodoTemplate';
+import TodoHead from './components/TodoHead';
+import TodoCreate from './components/TodoCreate';
+import { TodoProvider } from './TodoContext';
 
 export let Context = createContext()
 
 const App = () => {
-  const [todoData, setTodoData] = useState([...data])
-
-  const Todo = styled.div`
-    display: flex;  
-    flex-direction: column;
-    justify-content: space-between;
-    width: 512px;
-    height: 768px;
-    margin: 96px auto 32px;
-    border-radius: 15px;
-    background-color: #fff;
-    box-shadow: 0 0 10px 10px #eee;
-    box-sizing: border-box;
+  const GlobalStyle = createGlobalStyle`
+    body {
+      background-color: #e9ecef;
+    }
   `
 
   return (
-    <Todo>
-      <Context.Provider value={{ todoData, setTodoData }}>
-        <TodoTop />
-        <TodoList />
-        <TodoBottom />
-      </Context.Provider>
-    </Todo>
+    <>
+      <TodoProvider>
+        <GlobalStyle />
+        <TodoTemplate>
+          <TodoHead />
+          <TodoList />
+          <TodoCreate />
+        </TodoTemplate>
+      </TodoProvider>
+    </>
   );
 };
 
