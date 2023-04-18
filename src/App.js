@@ -1,25 +1,38 @@
-import logo from './logo.svg';
+import React, { createContext, useState } from 'react';
 import './App.css';
+import styled from 'styled-components';
+import TodoTop from './components/TodoTop';
+import TodoList from './components/TodoList';
+import TodoBottom from './components/TodoBottom';
+import data from './data';
 
-function App() {
+export let Context = createContext()
+
+const App = () => {
+  const [todoData, setTodoData] = useState([...data])
+
+  const Todo = styled.div`
+    display: flex;  
+    flex-direction: column;
+    justify-content: space-between;
+    width: 512px;
+    height: 768px;
+    margin: 96px auto 32px;
+    border-radius: 15px;
+    background-color: #fff;
+    box-shadow: 0 0 10px 10px #eee;
+    box-sizing: border-box;
+  `
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Todo>
+      <Context.Provider value={{ todoData, setTodoData }}>
+        <TodoTop />
+        <TodoList />
+        <TodoBottom />
+      </Context.Provider>
+    </Todo>
   );
-}
+};
 
 export default App;
