@@ -41,7 +41,7 @@ const TodoHead = () => {
    return (
       <TodoHeadBlock>
          <h1>{dataString}</h1>
-         <div className="day">화요일</div>
+         <div className="day">{dayName}</div>
          <div className="tasks-left">할일 {undoneTasks.length}개 남음</div>
       </TodoHeadBlock>
    );
