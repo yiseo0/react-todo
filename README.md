@@ -1,7 +1,7 @@
 <div align="center">
 <h1>📑 To Do List 웹 앱(React)</h1>
 
-본 레포지토리는 [벨로퍼트와 함께하는 모던 리액트(멋진 투두 만들기)](https://react.vlpt.us/mashup-todolist/) 미리보기를 혼자 구현해본 후   
+본 레포지토리는 [벨로퍼트와 함께하는 모던 리액트(멋진 투두 만들기)](https://react.vlpt.us/mashup-todolist/) 미리보기를 보고 혼자 구현해본 후   
 완성코드와 비교하며 학습한 내용이 담겨있습니다. 
 
 [바로가기](https://toy-todolist.netlify.app/)
