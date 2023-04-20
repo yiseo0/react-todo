@@ -20,6 +20,4 @@
 <br>
 
 ## 2. 관련 기록
-* [Notion](https://developer-jin.notion.site/To-DoList-911109d8cda94c0cbf323c0921338d7b)
-
-
+* [Notion](https://yiseo.notion.site/To-DoList-911109d8cda94c0cbf323c0921338d7b)
