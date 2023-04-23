@@ -20,4 +20,4 @@
 <br>
 
 ## 2. 관련 기록
-* [Notion](https://yiseo.notion.site/To-DoList-911109d8cda94c0cbf323c0921338d7b)
+* [[토이 프로젝트] TO DO LIST 학습기록](https://velog.io/@yiseo0/%ED%86%A0%EC%9D%B4%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-TO-DO-LIST-%ED%95%99%EC%8A%B5-%EA%B8%B0%EB%A1%9D)
