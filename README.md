@@ -8,7 +8,9 @@
 
 [바로가기](https://toy-todolist.netlify.app/)
 
-![todo](https://user-images.githubusercontent.com/65934208/232988400-e68ba6ff-76e5-40b5-a228-201fea458e7a.gif)
+|기존| 기능 개선 및 추가 (23.04.27)|
+|---|-----------------|
+|![todo](https://user-images.githubusercontent.com/65934208/232988400-e68ba6ff-76e5-40b5-a228-201fea458e7a.gif)| ![todo_re](https://user-images.githubusercontent.com/65934208/234965541-02ad5c3d-13b2-4ab3-a6d2-6b3d39e15318.gif)|
 
 
 </div>
