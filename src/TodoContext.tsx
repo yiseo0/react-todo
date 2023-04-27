@@ -1,5 +1,31 @@
-import React, { useReducer, createContext, useContext, useRef } from 'react';
+import React, { useReducer, createContext, useContext, useRef, Dispatch } from 'react';
+import { useEffect } from 'react';
 import { useState } from 'react';
+
+export type Todo = {
+  id: number,
+  text: string,
+  done: boolean
+}
+
+type TodoState = Todo[]
+
+type Action =
+  | { type: 'CREATE', todo: Todo }
+  | { type: 'TOGGLE', id: number }
+  | { type: 'REMOVE', id: number }
+  | { type: 'INITIAL', todos: TodoState }
+
+type TodosDispatch = Dispatch<Action>;
+
+type TodoCreateOpenContextType = {
+  open: boolean,
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>,
+  value: string,
+  setValue: React.Dispatch<React.SetStateAction<string>>,
+  saveId: number,
+  setSaveId: React.Dispatch<React.SetStateAction<number>>
+}
 
 const initialTodos = [
   {
@@ -24,8 +50,8 @@ const initialTodos = [
   }
 ];
 
-function todoReducer(state, action) {
-  let updatedTodos;
+function todoReducer(state: TodoState, action: Action): TodoState {
+  let updatedTodos: TodoState;
   switch (action.type) {
     case 'CREATE':
       if (state.find(todo => todo.id === action.todo.id)) {
@@ -46,28 +72,34 @@ function todoReducer(state, action) {
     case 'REMOVE':
       updatedTodos = state.filter(todo => todo.id !== action.id);
       break;
+    case 'INITIAL':
+      updatedTodos = action.todos
+      break;
     default:
-      throw new Error(`Unhandled action type: ${action.type}`);
+      throw new Error(`Unhandled action`);
   }
 
   localStorage.setItem('todos', JSON.stringify(updatedTodos))
   return updatedTodos
 }
 
-const TodoStateContext = createContext();
-const TodoDispatchContext = createContext();
-const TodoNextIdContext = createContext();
-const TodoCreateOpenContext = createContext();
+const TodoStateContext = createContext<TodoState | undefined>(undefined);
+const TodoDispatchContext = createContext<TodosDispatch | undefined>(undefined);
+const TodoNextIdContext = createContext<React.MutableRefObject<number> | undefined>(undefined);
+const TodoCreateOpenContext = createContext<TodoCreateOpenContextType | undefined>(undefined);
 
-export function TodoProvider({ children }) {
-  const [state, dispatch] = useReducer(todoReducer,
-    // 로컬 스토리지 todos 유무에 따른 초기화
-    JSON.parse(localStorage.getItem('todos')) || initialTodos
-  );
+export function TodoProvider({ children }: { children: React.ReactNode }) {
+  const [state, dispatch] = useReducer(todoReducer, initialTodos);
   const nextId = useRef(Math.max(...state.map(todo => todo.id)) + 1);
   const [open, setOpen] = useState(false)
   const [value, setValue] = useState('');
   const [saveId, setSaveId] = useState(0)
+
+  useEffect(() => {
+    const todosLocalStorage = localStorage.getItem('todos')
+    todosLocalStorage && dispatch({ type: 'INITIAL', todos: JSON.parse(todosLocalStorage) })
+    console.log('리렌더링')
+  }, [])
 
   return (
     <TodoDispatchContext.Provider value={dispatch}>

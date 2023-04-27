@@ -29,7 +29,7 @@ const Input = styled.input`
   box-sizing: border-box;
 `;
 
-const CircleButton = styled.button`
+const CircleButton = styled.button<{ open: boolean }>`
    background: #38d9a9;
   &:hover {
     background: #63e6be;
@@ -63,7 +63,7 @@ const CircleButton = styled.button`
   `}
 `
 
-const TodoCreate = () => {
+function TodoCreate() {
    const { open, setOpen, value, setValue, saveId, setSaveId } = useTodoCreateOpen()
    const dispatch = useTodoDispatch()
    const nextId = useTodoNextId()
@@ -71,8 +71,8 @@ const TodoCreate = () => {
    const onToggle = () => {
       setOpen(!open)
    }
-   const onChange = e => setValue(e.target.value);
-   const onSubmit = e => {
+   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => setValue(e.target.value);
+   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
       dispatch({
          type: 'CREATE',

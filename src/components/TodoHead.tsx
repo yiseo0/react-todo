@@ -26,25 +26,25 @@ const TodoHeadBlock = styled.div`
   }
 `;
 
-const TodoHead = () => {
-   const todos = useTodoState()
-   const undoneTasks = todos.filter(todo => !todo.done)
-   
-   const today = new Date()
-   const dataString = today.toLocaleString('ko-kr',{
-      year:'numeric',
-      month:'long',
-      day:'numeric',
-   })
-   const dayName = today.toLocaleString('ko-kr', { weekday : 'long'})
+function TodoHead() {
+  const todos = useTodoState()
+  const undoneTasks = todos.filter(todo => !todo.done)
 
-   return (
-      <TodoHeadBlock>
-         <h1>{dataString}</h1>
-         <div className="day">{dayName}</div>
-         <div className="tasks-left">할일 {undoneTasks.length}개 남음</div>
-      </TodoHeadBlock>
-   );
+  const today = new Date()
+  const dataString = today.toLocaleString('ko-kr', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  })
+  const dayName = today.toLocaleString('ko-kr', { weekday: 'long' })
+
+  return (
+    <TodoHeadBlock>
+      <h1>{dataString}</h1>
+      <div className="day">{dayName}</div>
+      <div className="tasks-left">할일 {undoneTasks.length}개 남음</div>
+    </TodoHeadBlock>
+  );
 };
 
 export default TodoHead;

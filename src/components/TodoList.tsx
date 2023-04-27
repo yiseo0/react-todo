@@ -10,7 +10,7 @@ const TodoListBlock = styled.div`
   overflow-y: auto;
 `
 
-const TodoList = () => {
+function TodoList() {
    const todos = useTodoState()
    return (
       <TodoListBlock>

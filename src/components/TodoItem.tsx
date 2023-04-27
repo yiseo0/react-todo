@@ -2,7 +2,7 @@ import React from 'react';
 import styled, { css } from 'styled-components';
 import { MdDone, MdDelete } from 'react-icons/md';
 import { HiPencilAlt } from 'react-icons/hi';
-import { useTodoCreateOpen, useTodoDispatch } from '../TodoContext';
+import { Todo, useTodoCreateOpen, useTodoDispatch } from '../TodoContext';
 
 const TodoItemBlock = styled.div`
   display: flex;
@@ -11,7 +11,7 @@ const TodoItemBlock = styled.div`
   padding-bottom: 0.75rem;
 `;
 
-const CheckCircle = styled.div`
+const CheckCircle = styled.div<{ done: boolean }>`
   flex-shrink : 0;
   width: 2rem;
   height: 2rem;
@@ -45,7 +45,7 @@ const Button = styled.div`
    }
 `
 
-const Text = styled.div`
+const Text = styled.div<{ done: boolean }>`
    flex: 1;
    font-size: 1.25rem;
    color: #495057;
@@ -59,7 +59,7 @@ const Text = styled.div`
 `
 
 
-const TodoItem = ({ id, done, text }) => {
+function TodoItem({ id, done, text }: Todo) {
    const dispatch = useTodoDispatch()
    const { setOpen, setValue, setSaveId } = useTodoCreateOpen()
    const onToggle = () => dispatch({ type: 'TOGGLE', id })

@@ -14,7 +14,7 @@ const TodoTemplateBlock = styled.div`
    flex-direction: column;
 `;
 
-const TodoTemplate = ({children}) => {
+function TodoTemplate({ children }: { children: React.ReactNode }) {
    return (
       <TodoTemplateBlock>{children}</TodoTemplateBlock>
    );
