@@ -9,7 +9,7 @@ const Remove = styled.div`
    align-items: center;
    justify-content: center;
    color: #dee2e6;
-   font-size: 24px;
+   font-size: 1.5rem;
    cursor: pointer;
    &:hover {
       color: #ff6b6b;
@@ -20,8 +20,8 @@ const Remove = styled.div`
 const TodoItemBlock = styled.div`
   display: flex;
   align-items: center;
-  padding-top: 12px;
-  padding-bottom: 12px;
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
   &:hover {
       ${Remove} {
          display: initial;
@@ -30,16 +30,16 @@ const TodoItemBlock = styled.div`
 `;
 
 const CheckCircle = styled.div`
-  width: 32px;
-  height: 32px;
-  border-radius: 16px;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 1rem;
   border: 1px solid #ced4da;
   color: #ced4da;
-  font-size: 24px;
+  font-size: 1.5rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-right: 20px;
+  margin-right: 1.25rem;
   cursor: pointer;
   ${props =>
       props.done &&
@@ -51,26 +51,28 @@ const CheckCircle = styled.div`
 
 const Text = styled.div`
    flex: 1;
-   font-size: 21px;
+   font-size: 1.25rem;
    color: #495057;
+   cursor: pointer;
    ${props =>
       props.done &&
       css`
-      color: #ced4d;
+      color: #aaa;
+      text-decoration: line-through;
    `}
 `
 
 
 const TodoItem = ({ id, done, text }) => {
    const dispatch = useTodoDispatch()
-   
-   const onToggle = () => dispatch({type : 'TOGGLE', id})
-   const onDel = () => dispatch({type: 'REMOVE', id})
+
+   const onToggle = () => dispatch({ type: 'TOGGLE', id })
+   const onDel = () => dispatch({ type: 'REMOVE', id })
    return (
       <TodoItemBlock>
          <CheckCircle done={done} onClick={onToggle}><MdDone /></CheckCircle>
-         <Text done={done}>{text}</Text>
-         <Remove><MdDelete onClick={onDel}/></Remove>
+         <Text done={done} onClick={onToggle}>{text}</Text>
+         <Remove><MdDelete onClick={onDel} /></Remove>
       </TodoItemBlock>
    );
 };

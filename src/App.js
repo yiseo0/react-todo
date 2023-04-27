@@ -14,6 +14,10 @@ const App = () => {
     body {
       background-color: #e9ecef;
     }
+
+    @media only screen and (max-width: 480px) {
+      html {font-size:12px;}
+    }
   `
 
   return (

@@ -3,25 +3,25 @@ import styled from 'styled-components';
 import { useTodoState } from '../TodoContext';
 
 const TodoHeadBlock = styled.div`
-  padding-top: 48px;
-  padding-left: 32px;
-  padding-right: 32px;
-  padding-bottom: 24px;
+  padding-top: 3rem;
+  padding-left: 2rem;
+  padding-right: 2rem;
+  padding-bottom: 1.5rem;
   border-bottom: 1px solid #e9ecef;
   h1 {
     margin: 0;
-    font-size: 36px;
+    font-size: 2rem;
     color: #343a40;
   }
   .day {
     margin-top: 4px;
     color: #868e96;
-    font-size: 21px;
+    font-size: 1.25rem;
   }
   .tasks-left {
     color: #20c997;
-    font-size: 18px;
-    margin-top: 40px;
+    font-size: 1.125rem;
+    margin-top: 2.5rem;
     font-weight: bold;
   }
 `;
