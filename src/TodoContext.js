@@ -1,4 +1,5 @@
 import React, { useReducer, createContext, useContext, useRef } from 'react';
+import { useState } from 'react';
 
 const initialTodos = [
   {
@@ -24,36 +25,60 @@ const initialTodos = [
 ];
 
 function todoReducer(state, action) {
+  let updatedTodos;
   switch (action.type) {
     case 'CREATE':
-      return state.concat(action.todo);
+      if (state.find(todo => todo.id === action.todo.id)) {
+        // 수정
+        updatedTodos = state.map(todo =>
+          todo.id === action.todo.id ? { ...todo, text: action.todo.text } : todo
+        );
+      } else {
+        // 추가
+        updatedTodos = state.concat(action.todo);
+      }
+      break;
     case 'TOGGLE':
-      return state.map(todo =>
+      updatedTodos = state.map(todo =>
         todo.id === action.id ? { ...todo, done: !todo.done } : todo
       );
+      break;
     case 'REMOVE':
-      return state.filter(todo => todo.id !== action.id);
+      updatedTodos = state.filter(todo => todo.id !== action.id);
+      break;
     default:
       throw new Error(`Unhandled action type: ${action.type}`);
   }
+
+  localStorage.setItem('todos', JSON.stringify(updatedTodos))
+  return updatedTodos
 }
 
 const TodoStateContext = createContext();
 const TodoDispatchContext = createContext();
 const TodoNextIdContext = createContext();
+const TodoCreateOpenContext = createContext();
 
 export function TodoProvider({ children }) {
-  const [state, dispatch] = useReducer(todoReducer, initialTodos);
-  const nextId = useRef(5);
+  const [state, dispatch] = useReducer(todoReducer,
+    // 로컬 스토리지 todos 유무에 따른 초기화
+    JSON.parse(localStorage.getItem('todos')) || initialTodos
+  );
+  const nextId = useRef(Math.max(...state.map(todo => todo.id)) + 1);
+  const [open, setOpen] = useState(false)
+  const [value, setValue] = useState('');
+  const [saveId, setSaveId] = useState(0)
 
   return (
-    <TodoStateContext.Provider value={state}>
-      <TodoDispatchContext.Provider value={dispatch}>
+    <TodoDispatchContext.Provider value={dispatch}>
+      <TodoStateContext.Provider value={state}>
         <TodoNextIdContext.Provider value={nextId}>
-          {children}
+          <TodoCreateOpenContext.Provider value={{ open, setOpen, value, setValue, saveId, setSaveId }}>
+            {children}
+          </TodoCreateOpenContext.Provider>
         </TodoNextIdContext.Provider>
-      </TodoDispatchContext.Provider>
-    </TodoStateContext.Provider>
+      </TodoStateContext.Provider >
+    </TodoDispatchContext.Provider>
   );
 }
 
@@ -75,6 +100,14 @@ export function useTodoDispatch() {
 
 export function useTodoNextId() {
   const context = useContext(TodoNextIdContext);
+  if (!context) {
+    throw new Error('Cannot find TodoProvider');
+  }
+  return context;
+}
+
+export function useTodoCreateOpen() {
+  const context = useContext(TodoCreateOpenContext);
   if (!context) {
     throw new Error('Cannot find TodoProvider');
   }

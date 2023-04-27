@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { MdAdd } from 'react-icons/md';
 import styled, { css } from 'styled-components';
-import { useTodoDispatch, useTodoNextId } from '../TodoContext';
+import { useTodoCreateOpen, useTodoDispatch, useTodoNextId } from '../TodoContext';
 
 const InsertFormPositioner = styled.form`
   width: 100%;
@@ -64,9 +64,7 @@ const CircleButton = styled.button`
 `
 
 const TodoCreate = () => {
-   const [open, setOpen] = useState(false)
-   const [value, setValue] = useState('');
-
+   const { open, setOpen, value, setValue, saveId, setSaveId } = useTodoCreateOpen()
    const dispatch = useTodoDispatch()
    const nextId = useTodoNextId()
 
@@ -79,14 +77,14 @@ const TodoCreate = () => {
       dispatch({
          type: 'CREATE',
          todo: {
-            id: nextId.current,
+            id: saveId ? saveId : nextId.current,
             text: value,
             done: false
          }
       })
       setValue('');
       setOpen(false);
-      nextId.current += 1;
+      saveId ? setSaveId(0) : nextId.current += 1;
    }
 
    return (
